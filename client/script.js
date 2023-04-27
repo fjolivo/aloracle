@@ -1,7 +1,7 @@
 import bot from './assets/bot.svg';
 import user from './assets/user.svg';
 
-const form = document.querySelector('from');
+const form = document.querySelector('form');
 const chatContainer = document.querySelector('#chat_container');
 
 let loadInterval;
@@ -58,52 +58,56 @@ function chatStripe  (isAi, value, uniqueId) {
 }
 
 const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault()
 
-  const data = new FormData(form);
+    const data = new FormData(form)
 
-  // user's chastripe
-  chatContainer.innerHTML += chatStripe(false, data.get('prompt'));
+    // user's chatstripe
+    chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
 
-  form.reset();
+    // to clear the textarea input 
+    form.reset()
 
-  // bot's chatstripe
-  const uniqueId = generateUniqueId();
-  chatContainer.innerHTML += chatStripe(true, " ", uniqueId);
+    // bot's chatstripe
+    const uniqueId = generateUniqueId()
+    chatContainer.innerHTML += chatStripe(true, " ", uniqueId)
 
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+    // to focus scroll to the bottom 
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 
-  const messageDiv = document.getElementById(uniqueId);
+    // specific message div 
+    const messageDiv = document.getElementById(uniqueId)
 
-  loader(messageDiv);
+    // messageDiv.innerHTML = "..."
+    loader(messageDiv)
 
-  // fetch data from server -> bot's response
+  // // fetch data from server -> bot's response
 
-  const response = await fetch ('http://localhost:5000', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;'
-    },
-    body:JSON.stringify({
-      prompt: data.get('prompt')
-    })
-  })
+  // const response = await fetch ('http://localhost:5000', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json;'
+  //   },
+  //   body:JSON.stringify({
+  //     prompt: data.get('prompt')
+  //   })
+  // })
 
-  clearInterval(loadInterval);
-  messageDiv.innderHTML = '';
+  // clearInterval(loadInterval);
+  // messageDiv.innderHTML = '';
 
-  if(response.ok) {
-    const data = await response.json();
-    const pasedData = data.bot.trim();
+  // if(response.ok) {
+  //   const data = await response.json();
+  //   const pasedData = data.bot.trim();
 
-    typeText(messageDiv, parsedData);
-  } else {
-    const err = await response.text();
+  //   typeText(messageDiv, parsedData);
+  // } else {
+  //   const err = await response.text();
 
-    messageDiv.innerHTML = "Something went wrong";
+  //   messageDiv.innerHTML = "Something went wrong";
 
-    alert(err);
-  }
+  //   alert(err);
+  // }
 
 }
 
