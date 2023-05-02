@@ -60,7 +60,7 @@ function chatStripe  (isAi, value, uniqueId) {
 const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const data = new FormData(form)
+    const data = new FormData(form);
 
     // user's chatstripe
     chatContainer.innerHTML += chatStripe(false, data.get('prompt'))
@@ -81,33 +81,33 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-  // // fetch data from server -> bot's response
+  // fetch data from server -> bot's response
 
-  // const response = await fetch ('http://localhost:5000', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json;'
-  //   },
-  //   body:JSON.stringify({
-  //     prompt: data.get('prompt')
-  //   })
-  // })
+  const response = await fetch ('http://localhost:5000', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;'
+    },
+    body:JSON.stringify({
+      prompt: data.get('prompt')
+    })
+  })
 
-  // clearInterval(loadInterval);
-  // messageDiv.innderHTML = '';
+  clearInterval(loadInterval);
+  messageDiv.innderHTML = '';
 
-  // if(response.ok) {
-  //   const data = await response.json();
-  //   const pasedData = data.bot.trim();
+  if(response.ok) {
+    const data = await response.json();
+    const pasedData = data.bot.trim();
 
-  //   typeText(messageDiv, parsedData);
-  // } else {
-  //   const err = await response.text();
+    typeText(messageDiv, parsedData);
+  } else {
+    const err = await response.text();
 
-  //   messageDiv.innerHTML = "Something went wrong";
+    messageDiv.innerHTML = "Something went wrong";
 
-  //   alert(err);
-  // }
+    alert(err);
+  }
 
 }
 
