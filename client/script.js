@@ -93,12 +93,18 @@ const handleSubmit = async (e) => {
     })
   })
 
+  if(response.status === 429) {
+    // wait for a while before retrying the request
+    setTimeout(() => handleSubmit(e), 1000);
+    return;
+  }
+
   clearInterval(loadInterval);
   messageDiv.innderHTML = '';
 
   if(response.ok) {
     const data = await response.json();
-    const pasedData = data.bot.trim();
+    const parsedData = data.bot.trim();
 
     typeText(messageDiv, parsedData);
   } else {

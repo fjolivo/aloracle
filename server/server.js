@@ -5,7 +5,7 @@ import { Configuration, OpenAIApi } from 'openai';
 
 dotenv.config();
 
-console.log(process.env.OPENAI_API_KEY)
+// console.log(process.env.OPENAI_API_KEY)
 
 const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -32,7 +32,7 @@ app.post('/', async (req, res) => {
             prompt: `${prompt}`,
             temperature: 0,
             max_tokens: 3000,
-            top_p:1,
+            top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
         });
